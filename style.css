@@ -313,3 +313,74 @@ body, html {
     font-weight: 400;
     color: #666;
 }
+
+/* Mobile responsiveness fix for screens under 768px (because I forgot about it) */
+
+@media (max-width: 768px) {
+    /* Header & text sizing */
+    #main-header {
+        height: 120px; /* Slightly taller to fit the search bar */
+        padding-top: 10px;
+        justify-content: flex-start;
+    }
+    .header-content h1 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    .header-content p {
+        font-size: 0.8rem;
+    }
+
+    /* Repositioning the search bar */
+    #search-container {
+        top: 65px; /* Tucks it right under the title */
+        left: 15px;
+        right: 15px; /* Stretches it across the screen */
+    }
+    #level-search {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+    }
+
+    /* Transforms the sidebar into a bottom drawer esque thing */
+    #side-menu {
+        top: 60vh; /* Starts 60% down the screen */
+        left: 0;
+        width: 100%;
+        height: 40vh; /* Takes up the bottom 40% */
+        border-right: none !important;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+        transition: border-top 0.3s ease;
+    }
+
+    /* Changes the reactive border to sit on top of the drawer */
+    #side-menu.class-0 { border-top: 8px solid #DBC864 !important; }
+    #side-menu.class-1 { border-top: 8px solid #E7B60C !important; }
+    #side-menu.class-2 { border-top: 8px solid #DC8C00 !important; }
+    #side-menu.class-3 { border-top: 8px solid #EA5500 !important; }
+    #side-menu.class-4 { border-top: 8px solid #ED1501 !important; }
+    #side-menu.class-5 { border-top: 8px solid #B00707 !important; }
+    #side-menu.class-X { border-top: 8px solid #696969 !important; }
+
+    /* Restricts map area so it doesn't get hidden behind the drawer */
+    #cy {
+        top: 120px;
+        left: 0;
+        bottom: 40vh; /* Map ends exactly where the drawer begins */
+    }
+
+    /* Stack control panel buttons Vertically */
+    #control-panel {
+        top: 130px; /* Moves them up under the header */
+        bottom: auto;
+        right: 10px;
+        flex-direction: column; /* Stacks them */
+        gap: 8px;
+    }
+    #control-panel button {
+        padding: 8px;
+        font-size: 0.6rem;
+    }
+}
