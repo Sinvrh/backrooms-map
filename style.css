@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&display=swap');
+@import url('https://googleapis.com');
+
+* {
+    font-family: 'Public Sans', sans-serif !important;
+}
+
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background-image: 
+        linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 100%), 
+        url('https://files.catbox.moe/she6i8.webp');
+    background-repeat: repeat;
+    background-size: 500px; /* Zoomed in significantly to show texture detail */
+    background-position: center;
+    color: #fff; /* Pure white text */
+    z-index: 100; /* High z-index to stay on top */
+    display: flex;
+    flex-direction: column; /* Stack the title and subtext */
+    justify-content: center;
+    padding-left: 30px;
+    border: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+#side-menu {
+    position: fixed;
+    top: 110px; /* Right below header */
+    left: 0;
+    width: 250px;
+    bottom: 0;
+    background: #e9e5d5;
+    border-right: 1px solid #ccc;
+    z-index: 50;
+    transition: border-right 0.3s ease; /* Smooth color transitions */
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    overflow-y: auto;
+}
+
+/* Reactive borders based on survival class */
+#side-menu.class-0 { border-right: 8px solid #DBC864; }
+#side-menu.class-1 { border-right: 8px solid #E7B60C; }
+#side-menu.class-2 { border-right: 8px solid #DC8C00; }
+#side-menu.class-3 { border-right: 8px solid #EA5500; }
+#side-menu.class-4 { border-right: 8px solid #ED1501; }
+#side-menu.class-5 { border-right: 8px solid #B00707; }
+#side-menu.class-X { border-right: 8px solid #696969; }
+
+/* Removes the old sidebar style if it's still there */
+#sidebar { display: none !important; }
+
+.summary-text {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #444;
+    font-style: italic;
+}
+
+.menu-header {
+    background: #eee;
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #555;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    letter-spacing: 1px;
+}
+
+.menu-section {
+    padding: 10px 0;
+}
+
+.menu-item {
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #999;
+}
+
+.menu-item span {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+#no-selection {
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    color: #888;
+    font-style: italic;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    font-weight: 800;
+    text-transform: capitalize;
+    line-height: 1;
+    /* A subtle black glow to make the white letters pop against the texture */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
+}
+
+.header-content p {
+    margin: 5px 0 0 0;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 1rem;
+    color: #ccc;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+/* Move the sidebar down so it doesn't overlap the header */
+#sidebar {
+    position: absolute;
+    top: 130px; /* Header is ~110px, this gives breathing room */
+    left: 20px; 
+    background: rgba(255, 255, 255, 0.95); /* Should be slightly transparent to see wallpaper through it */
+    border: 1px solid #999;
+    padding: 20px;
+    z-index: 50; /* Makes it below the header but above the map */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+}
+
+#bg-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    background-image: url('https://files.catbox.moe/she6i8.webp'); /* Default Wallpaper */
+    background-repeat: repeat;
+    background-size: 250px;
+    background-position: center;
+    z-index: 0;
+    transition: filter 0.6s ease-in-out; /* Will only transition the darkness and blur, not the image itself */
+}
+
+/* When a level is active, the background will change to match */
+#bg-layer.level-active {
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    /* background-position: center !important; */
+    filter: brightness(0.4) saturate(0.8); /* Darken so map lines stay visible */
+}
+
+#bg-wallpaper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://files.catbox.moe/she6i8.webp'); 
+    background-repeat: repeat;
+    background-size: 250px;
+    z-index: -2; /* Bottom-most layer */
+}
+
+#bg-image-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Sits above wallpaper */
+    opacity: 0; /* Hidden by default */
+    filter: brightness(0.35) saturate(0.7); /* The dimming effect */
+    transition: opacity 0.8s ease-in-out; /* Smooth fade in/out */
+    pointer-events: none; /* So it doesn't block mal clicks */
+}
+
+/* When active, it'll just fade the opacity in */
+#bg-image-layer.active {
+    opacity: 1;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000; /* Base color behind the layer */
+    /* background-color: #e7e3a1; */
+    /* background-image: url('https://files.catbox.moe/she6i8.webp'); */
+    /* background-repeat: repeat; */
+    /* background-size: 200px; ...Adjust to make the pattern bigger or smaller */
+}
+
+/* This is an overlay so the map lines are actually visible against the wallpaper */
+#cy {
+    background: transparent !important;
+    position: absolute;
+    top: 110px; /* Stays below the header */
+    left: 250px; /* Starts after the side menu */
+    right: 0;
+    bottom: 0;
+    z-index: 1; /* Ensures it's above the bg-layer */
+}
+
+#sidebar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 280px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-top: 5px solid #b01;
+    padding: 15px;
+    z-index: 10;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+#sidebar h1 {
+    font-size: 1.1rem;
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+#sidebar p {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+#search-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 150;
+}
+
+#level-search {
+    background: #e9e5d5;
+    border: 2px solid #333;
+    padding: 10px;
+    width: 200px;
+    font-weight: bold;
+}
+
+#control-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 150;
+    display: flex;
+    gap: 10px;
+}
+
+#control-panel button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 900;
+}
+
+#control-panel button.active {
+    background: #FFD700 !important; /* Gold to match the highlights */
+    color: #000 !important;
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#resource-list {
+    list-style-type: "- ";
+    padding-left: 25px;
+    margin: 0;
+}
+
+#resource-list li {
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+#wiki-link {
+    margin-top: 15px;
+    font-weight: 700;
+    color: #596cd7;
+    text-decoration: underline;
+    background: none !important;
+}
+
+#wiki-link:hover {
+    /* color: #000; */
+    background: none !important;
+    text-decoration: underline;
+}
+
+#level-author {
+    font-weight: 400;
+    color: #666;
+}

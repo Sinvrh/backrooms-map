@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backrooms Level Mapper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+</head>
+<body>
+    <!--  <div id="bg-layer"></div> Handles the dynamic background (not needed right now)-->
+    <div id="bg-wallpaper"></div> <!-- Static wallpaper layer -->
+    <div id="bg-image-layer"></div> <!-- Dynamic level photo layer -->
+    <header id="main-header">
+        <div class="header-content", style="font-family: 'Public Sans', sans-serif;">
+            <h1>The Backrooms</h1>
+            <p>Have you been here before?</p>
+        </div>
+        <nav id="side-menu">
+            <div class="menu-header">LEVEL INFORMATION</div>
+            <div class="menu-section">
+                <div class="menu-item">
+                    <span class="label">NAME:</span>
+                    <span id="level-name">---</span>
+                </div>
+                <div class="menu-item">
+                    <span class="label">EPITHET:</span>
+                        <span id="level-epithet">---</span>
+                </div>
+                <div class="menu-item">
+                    <span class="label">CLASS:</span>
+                    <span id="level-class">---</span>
+                </div>
+                <div class="menu-item">
+                    <span class="label">TYPE:</span>
+                    <span id="level-description">---</span>
+                </div>
+            </div>
+            
+            <div class="menu-header">RESOURCES</div>
+            <div class="menu-section">
+                <ul id="resource-list">
+                    <li><a id="wiki-link" href="#" target="_blank">View Backrooms wiki page</a></li>
+                    <li id="level-author">Author(s): ---</li>
+                </ul>
+                <div id="no-selection" style="display: none; padding: 10px 15px; font-size: 0.8rem; color: #888; font-style: italic;">No level link found</div>
+            </div>
+
+            <div class="menu-header">SUMMARY</div>
+            <div class="menu-section">
+                <div id="level-summary" class="summary-text">Select a level to view the level's basic summary info...</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Map container -->
+    <div id="cy"></div>
+    <!-- This loads the stuff in this order -->
+    <script src="levels.js"></script>
+    <script src="blurbs.js"></script>
+    <script src="info.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Top right search -->
+    <div id="search-container">
+        <input type="text" id="level-search" placeholder="SEARCH DATABASE...">
+    </div>
+
+    <!-- Bottom right controls -->
+    <div id="control-panel">
+        <button onclick="toggleType('one-way')">ONE-WAY</button>
+        <button onclick="toggleType('two-way')">TWO-WAY</button>
+        <button onclick="toggleType('dead-end')">DEAD ENDS</button>
+    </div>
+</body>
+</html>
